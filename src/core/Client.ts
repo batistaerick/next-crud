@@ -10,7 +10,7 @@ export default class Client {
   }
 
   static void() {
-    return new Client(null, null, "");
+    return new Client(null, null, '');
   }
 
   get id() {

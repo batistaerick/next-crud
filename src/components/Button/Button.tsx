@@ -1,5 +1,5 @@
-"use client";
-import { ReactNode } from "react";
+'use client';
+import { ReactNode } from 'react';
 
 interface ButtonProps {
   className?: string;

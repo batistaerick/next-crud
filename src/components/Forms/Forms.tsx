@@ -1,8 +1,8 @@
-"use client";
-import Client from "@/core/Client";
-import { useState } from "react";
-import Button from "../Button";
-import Input from "../Input";
+'use client';
+import Client from '@/core/Client';
+import { useState } from 'react';
+import Button from '../Button';
+import Input from '../Input';
 
 interface FormsProps {
   client: Client;
@@ -12,7 +12,7 @@ interface FormsProps {
 
 export default function Forms({ client, canceled, clientChanged }: FormsProps) {
   const id = client?.id;
-  const [name, setName] = useState<string>(client?.name ?? "");
+  const [name, setName] = useState<string>(client?.name ?? '');
   const [age, setAge] = useState<number>(client?.age ?? 0);
 
   return (
@@ -21,10 +21,15 @@ export default function Forms({ client, canceled, clientChanged }: FormsProps) {
       <Input text="Name" type="text" value={name} setState={setName} />
       <Input text="Age" type="number" value={age} setState={setAge} />
       <div className="flex justify-end mt-3">
-        <Button onClick={() => clientChanged?.(new Client(name, age, id))}>
-          {id ? "Change" : "Salve"}
+        <Button
+          className="p-2 m-1"
+          onClick={() => clientChanged?.(new Client(name, age, id))}
+        >
+          {id ? 'Change' : 'Salve'}
         </Button>
-        <Button onClick={canceled}>Cancel</Button>
+        <Button className="p-2 m-1" onClick={canceled}>
+          Cancel
+        </Button>
       </div>
     </div>
   );

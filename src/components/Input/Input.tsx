@@ -1,7 +1,7 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 interface InputProps {
-  type: "text" | "number";
+  type: 'text' | 'number';
   text: string;
   value: string | number;
   readOnly?: boolean;
@@ -16,7 +16,7 @@ export default function Input({
   setState,
 }: InputProps) {
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    if (type === "number") {
+    if (type === 'number') {
       setState?.(Number(event.target.value));
     }
     setState?.(event.target.value);
@@ -28,7 +28,7 @@ export default function Input({
         className={`
           border border-purple-500 rounded-lg
           focus:outline-none bg-gray-100 px-4 py-2
-          ${readOnly ? "" : "focus:bg-white"}
+          ${readOnly ? '' : 'focus:bg-white'}
         `}
         type={type}
         value={value}

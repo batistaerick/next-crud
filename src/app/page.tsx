@@ -1,48 +1,21 @@
-"use client";
-import ClientCollection from "@/backend/db/ClientCollection";
-import Button from "@/components/Button";
-import Forms from "@/components/Forms";
-import Layout from "@/components/Layout";
-import Table from "@/components/Table/Table";
-import Client from "@/core/Client";
-import ClientRepository from "@/core/ClientRepository";
-import { useEffect, useMemo, useState } from "react";
+'use client';
+import Button from '@/components/Button';
+import Forms from '@/components/Forms';
+import Layout from '@/components/Layout';
+import Table from '@/components/Table';
+import useClients from '@/hooks/useClients';
 
 export default function Home() {
-  const [visible, setVisible] = useState<"table" | "form">("table");
-  const [client, setClient] = useState<Client>(Client.void());
-  const [clients, setClients] = useState<Client[]>([]);
-
-  const repository: ClientRepository = useMemo(() => {
-    return new ClientCollection();
-  }, []);
-
-  useEffect(findAll, [repository]);
-
-  function findAll() {
-    repository.findAll().then(setClients);
-    setVisible("table");
-  }
-
-  function selectedClient(client: Client) {
-    setClient(client);
-    setVisible("form");
-  }
-
-  function excludedClient(client: Client) {
-    repository.delete(client);
-    findAll();
-  }
-
-  async function saveClient(client: Client) {
-    await repository.save(client);
-    findAll();
-  }
-
-  function newClient() {
-    setClient(Client.void());
-    setVisible("form");
-  }
+  const {
+    isTableVisible,
+    client,
+    clients,
+    newClient,
+    saveClient,
+    deleteClient,
+    selectedClient,
+    showTable,
+  } = useClients();
 
   return (
     <div
@@ -53,7 +26,7 @@ export default function Home() {
       `}
     >
       <Layout title="Simple Registration">
-        {visible === "table" ? (
+        {isTableVisible ? (
           <>
             <div className="flex justify-end">
               <Button className="mb-4" onClick={newClient}>
@@ -63,13 +36,13 @@ export default function Home() {
             <Table
               clients={clients}
               selectedClient={selectedClient}
-              excludedClient={excludedClient}
+              excludedClient={deleteClient}
             ></Table>
           </>
         ) : (
           <Forms
             client={client}
-            canceled={() => setVisible("table")}
+            canceled={showTable}
             clientChanged={saveClient}
           />
         )}

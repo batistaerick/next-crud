@@ -1,5 +1,5 @@
-import Client from "@/core/Client";
-import ClientRepository from "@/core/ClientRepository";
+import Client from '@/core/Client';
+import ClientRepository from '@/core/ClientRepository';
 import {
   addDoc,
   collection,
@@ -8,8 +8,8 @@ import {
   getDocs,
   QueryDocumentSnapshot,
   setDoc,
-} from "firebase/firestore/lite";
-import db from "../config";
+} from 'firebase/firestore/lite';
+import db from '../config';
 
 export default class ClientCollection implements ClientRepository {
   #converter = {
@@ -26,7 +26,7 @@ export default class ClientCollection implements ClientRepository {
   };
 
   #collections(id: string) {
-    return doc(db, "client", id).withConverter(this.#converter);
+    return doc(db, 'client', id).withConverter(this.#converter);
   }
 
   async save(client: Client): Promise<void> {
@@ -34,7 +34,7 @@ export default class ClientCollection implements ClientRepository {
       const docRef = this.#collections(client.id);
       await setDoc(docRef, client);
     } else {
-      const docRef = collection(db, "client", client.id).withConverter(
+      const docRef = collection(db, 'client', client.id).withConverter(
         this.#converter
       );
       await addDoc(docRef, client);
@@ -47,7 +47,7 @@ export default class ClientCollection implements ClientRepository {
   }
 
   async findAll(): Promise<Client[]> {
-    const clientsCollection = collection(db, "client").withConverter(
+    const clientsCollection = collection(db, 'client').withConverter(
       this.#converter
     );
     const clientsSnapshot = await getDocs(clientsCollection);

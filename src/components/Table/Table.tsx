@@ -1,5 +1,5 @@
-import Client from "@/core/Client";
-import { EditIcon, TrashIcon } from "public/Icons";
+import Client from '@/core/Client';
+import { EditIcon, TrashIcon } from 'public/Icons';
 
 interface TableProps {
   clients: Client[];
@@ -31,7 +31,7 @@ export default function Table({
         {selectedClient && (
           <button
             className={`
-              flex justify-center items-center 
+              flex justify-center items-center
               text-green-600 rounded-full p-2 m-1
               hover:bg-purple-50
             `}
@@ -59,7 +59,7 @@ export default function Table({
   function dataRender() {
     return clients?.map((client, index) => (
       <tr
-        className={`${index % 2 === 0 ? "bg-purple-200" : "bg-purple-100"}`}
+        className={`${index % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}
         key={client.id}
       >
         <td className="text-left p-4">{client.id}</td>
