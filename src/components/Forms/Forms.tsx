@@ -1,7 +1,6 @@
 "use client";
-
 import Client from "@/core/Client";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 
@@ -18,9 +17,9 @@ export default function Forms({ client, canceled, clientChanged }: FormsProps) {
 
   return (
     <div>
-      {id ? <Input readOnly text="ID" value="test" /> : false}
-      <Input text="Name" value={name} valueChanged={setName} />
-      <Input text="Birthday" type="number" value={age} valueChanged={setAge} />
+      {id ? <Input readOnly text="ID" type="text" value={client?.id} /> : false}
+      <Input text="Name" type="text" value={name} setState={setName} />
+      <Input text="Age" type="number" value={age} setState={setAge} />
       <div className="flex justify-end mt-3">
         <Button onClick={() => clientChanged?.(new Client(name, age, id))}>
           {id ? "Change" : "Salve"}

@@ -1,9 +1,11 @@
+import { ChangeEvent } from "react";
+
 interface InputProps {
-  type?: "text" | "number";
+  type: "text" | "number";
   text: string;
   value: string | number;
   readOnly?: boolean;
-  valueChanged?: (value: string | number) => void;
+  setState?: (value: string | number) => void;
 }
 
 export default function Input({
@@ -11,8 +13,14 @@ export default function Input({
   type,
   value,
   readOnly,
-  valueChanged,
+  setState,
 }: InputProps) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    if (type === "number") {
+      setState?.(Number(event.target.value));
+    }
+    setState?.(event.target.value);
+  }
   return (
     <div className="flex flex-col mb-4">
       <label className="mb-2">{text}</label>
@@ -22,10 +30,12 @@ export default function Input({
           focus:outline-none bg-gray-100 px-4 py-2
           ${readOnly ? "" : "focus:bg-white"}
         `}
-        type={type && "text"}
+        type={type}
         value={value}
         readOnly={readOnly}
-        onChange={(event) => valueChanged?.(event.target.value)}
+        onChange={onChange}
+        min="0"
+        max="120"
       />
     </div>
   );

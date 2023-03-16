@@ -10,7 +10,7 @@ export default class Client {
   }
 
   static void() {
-    return new Client("", undefined, "");
+    return new Client(null, null, "");
   }
 
   get id() {
@@ -23,5 +23,17 @@ export default class Client {
 
   get age() {
     return this.#age;
+  }
+
+  static converter(data: any) {
+    return new Client(data.name, data.number, data.id);
+  }
+
+  static toObject(client: Client) {
+    return {
+      id: client.id,
+      name: client.name,
+      age: client.age,
+    };
   }
 }

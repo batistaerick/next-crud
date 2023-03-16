@@ -1,33 +1,44 @@
 "use client";
+import ClientCollection from "@/backend/db/ClientCollection";
 import Button from "@/components/Button";
 import Forms from "@/components/Forms";
 import Layout from "@/components/Layout";
 import Table from "@/components/Table/Table";
 import Client from "@/core/Client";
-import { useState } from "react";
+import ClientRepository from "@/core/ClientRepository";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const [visible, setVisible] = useState<"table" | "form">("table");
   const [client, setClient] = useState<Client>(Client.void());
+  const [clients, setClients] = useState<Client[]>([]);
 
-  const clients = [
-    new Client("Erick", 28, "asdf"),
-    new Client("Netero", 112, "df"),
-    new Client("Gon", 14, ""),
-    new Client("Killua", 14, ""),
-  ];
+  const repository: ClientRepository = useMemo(() => {
+    return new ClientCollection();
+  }, []);
 
-  function clientSelected(client: Client) {
+  useEffect(findAll, [repository]);
+
+  function findAll() {
+    repository.findAll().then(setClients);
+    setVisible("table");
+  }
+
+  function selectedClient(client: Client) {
     setClient(client);
     setVisible("form");
   }
+
   function excludedClient(client: Client) {
-    console.log(client);
+    repository.delete(client).then((promises) => console.log(promises));
+    findAll();
   }
-  function saveClient(client: Client) {
-    console.log(client);
-    setVisible("table");
+
+  async function saveClient(client: Client) {
+    await repository.save(client);
+    findAll();
   }
+
   function newClient() {
     setClient(Client.void());
     setVisible("form");
@@ -51,7 +62,7 @@ export default function Home() {
             </div>
             <Table
               clients={clients}
-              selectedClient={clientSelected}
+              selectedClient={selectedClient}
               excludedClient={excludedClient}
             ></Table>
           </>
