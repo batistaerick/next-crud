@@ -30,7 +30,7 @@ export default function Home() {
   }
 
   function excludedClient(client: Client) {
-    repository.delete(client).then((promises) => console.log(promises));
+    repository.delete(client);
     findAll();
   }
 
@@ -56,7 +56,7 @@ export default function Home() {
         {visible === "table" ? (
           <>
             <div className="flex justify-end">
-              <Button className="md-4" onClick={newClient}>
+              <Button className="mb-4" onClick={newClient}>
                 New Client
               </Button>
             </div>

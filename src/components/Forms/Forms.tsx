@@ -1,6 +1,6 @@
 "use client";
 import Client from "@/core/Client";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 
@@ -17,7 +17,7 @@ export default function Forms({ client, canceled, clientChanged }: FormsProps) {
 
   return (
     <div>
-      {id ? <Input readOnly text="ID" type="text" value={client?.id} /> : false}
+      {id && <Input readOnly text="ID" type="text" value={client?.id} />}
       <Input text="Name" type="text" value={name} setState={setName} />
       <Input text="Age" type="number" value={age} setState={setAge} />
       <div className="flex justify-end mt-3">
